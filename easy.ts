@@ -78,3 +78,40 @@ function minimumAbsDifference(arr: number[]): number[][] {
 // minimumAbsDifference([4,2,1,3])
 // minimumAbsDifference([1,3,6,10,15])
 // minimumAbsDifference([3,8,-10,23,19,-4,-14,27])
+
+function maxNumberOfBalloons(text: string): number {
+    if  (text.length < 7) return 0
+
+    const counts = {
+        b: 0,
+        a: 0,
+        l: 0,
+        o: 0,
+        n: 0
+    };
+
+    for (let char of text) {
+        if (char === 'b') {
+            counts.b++
+        } else if (char === 'a') {
+            counts.a++
+        } else if (char === 'l') {
+            counts.l++
+        } else if (char === 'o') {
+            counts.o++
+        } else if (char === 'n') {
+            counts.n++
+        }
+
+    }
+    return Math.min(
+        counts.b,
+        counts.a,
+        Math.floor(counts.l / 2),
+        Math.floor(counts.o / 2),
+        counts.n,
+    );
+};
+
+maxNumberOfBalloons("loonbalxballpoon"
+)
