@@ -113,5 +113,4 @@ function maxNumberOfBalloons(text: string): number {
     );
 };
 
-maxNumberOfBalloons("loonbalxballpoon"
-)
+maxNumberOfBalloons("loonbalxballpoon")
