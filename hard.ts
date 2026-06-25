@@ -86,3 +86,85 @@ function zigZagArrays(n: number, l: number, r: number): number {
 }
 
 // zigZagArrays(3, 4, 5)
+
+function zigZagArrays2(n: number, l: number, r: number): number {
+    const MOD = 1_000_000_007;
+    const k = r - l + 1;
+
+    if (k <= 1) return 0;
+    if (n === 1) return k;
+
+    const sz = 2 * k;
+
+    function multiply(A: number[][], B: number[][]): number[][] {
+        const C: number[][] = Array.from({ length: sz }, () => new Array(sz).fill(0));
+        for (let i = 0; i < sz; i++) {
+            for (let idx = 0; idx < sz; idx++) {
+                if (A[i][idx] === 0) continue;
+                for (let j = 0; j < sz; j++) {
+                    C[i][j] = (C[i][j] + A[i][idx] * B[idx][j]) % MOD;
+                }
+            }
+        }
+        return C;
+    }
+
+    function power(matrix: number[][], p: number): number[][] {
+        let res: number[][] = Array.from({ length: sz }, (_, i) => {
+            const row = new Array(sz).fill(0);
+            row[i] = 1;
+            return row;
+        });
+        let base = matrix;
+        while (p > 0) {
+            if (p % 2 === 1) {
+                res = multiply(res, base);
+            }
+            base = multiply(base, base);
+            p = Math.floor(p / 2);
+        }
+        return res;
+    }
+
+    const M: number[][] = Array.from({ length: sz }, () => new Array(sz).fill(0));
+    for (let v = 0; v < k; v++) {
+        for (let next_v = 0; next_v < v; next_v++) {
+            M[next_v * 2 + 1][v * 2] = 1;
+        }
+        for (let next_v = v + 1; next_v < k; next_v++) {
+            M[next_v * 2][v * 2 + 1] = 1;
+        }
+    }
+
+    const V = new Array(sz).fill(0);
+    for (let prev = 0; prev < k; prev++) {
+        for (let curr = 0; curr < k; curr++) {
+            if (curr > prev) {
+                V[curr * 2] += 1;
+            } else if (curr < prev) {
+                V[curr * 2 + 1] += 1;
+            }
+        }
+    }
+
+    if (n === 2) {
+        let total = 0;
+        for (let i = 0; i < sz; i++) total = (total + V[i]) % MOD;
+        return total;
+    }
+
+    const Mp = power(M, n - 2);
+
+    let ans = 0;
+    for (let i = 0; i < sz; i++) {
+        let current_state_count = 0;
+        for (let j = 0; j < sz; j++) {
+            current_state_count = (current_state_count + Mp[i][j] * V[j]) % MOD;
+        }
+        ans = (ans + current_state_count) % MOD;
+    }
+
+    return ans;
+}
+
+zigZagArrays2(3,4, 5)
