@@ -113,4 +113,30 @@ function maxNumberOfBalloons(text: string): number {
     );
 };
 
-maxNumberOfBalloons("loonbalxballpoon")
+// maxNumberOfBalloons("loonbalxballpoon")
+
+
+function nextGreatestLetter(letters: string[], target: string): string {
+    let result = null;
+
+    for (let str of letters) {
+        if (str > target) {
+            result = str
+            break;
+        }
+    }
+
+    return result ? result : letters[0]
+};
+
+// nextGreatestLetter(["c","f","j"], 'a') // c
+// nextGreatestLetter(["x","x","y","y"], 'z') // x
+
+function minimumCost(nums: number[]): number {
+    const target = nums[0];
+    const sorted = nums.slice(1).sort((a, b) => a - b);
+
+    return target + sorted[0] + sorted[1];
+};
+
+// minimumCost([1,2,3,12]) // 6

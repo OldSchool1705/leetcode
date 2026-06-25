@@ -167,4 +167,4 @@ function zigZagArrays2(n: number, l: number, r: number): number {
     return ans;
 }
 
-zigZagArrays2(3,4, 5)
+// zigZagArrays2(3,4, 5)

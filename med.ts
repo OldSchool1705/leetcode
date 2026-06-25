@@ -36,4 +36,29 @@ function angleClock(hour: number, minutes: number): number {
     return sum;
 };
 
-angleClock(12, 30)
+// angleClock(12, 30)
+
+function countMajoritySubarrays(nums: number[], target: number): number {
+    let totalSubarrays = 0;
+
+    for (let i = 0; i < nums.length; i++) {
+        let targetCount = 0;
+        let totalCount = 0;
+
+        for (let j = i; j < nums.length; j++) {
+
+            if (nums[j] === target) {
+                targetCount++;
+            }
+            totalCount++;
+
+            if (targetCount > totalCount / 2) {
+                totalSubarrays++;
+            }
+        }
+    }
+
+    return totalSubarrays;
+};
+
+// countMajoritySubarrays([1,2,2,3], 2)
